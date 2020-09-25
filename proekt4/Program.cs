@@ -3,93 +3,83 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using System.Collections.Specialized;
 
-namespace dictionary
+namespace _BitArray
 {
   class Program
   {
     static void Main(string[] args)
     {
-      //#1 
-      //Hashtable emailLookup = new Hashtable();
+      // C#
+      //BitArray bits = new BitArray(3);
+      //bits[0] = false;
+      //bits[1] = true;
+      //bits[2] = false;
 
-      //// Метод Add  принимает в качестве первого параметра ключ,
-      //// а в качестве второго - значение
-      //emailLookup.Add("sbishop@contoso.com", "Bishop, Scott");
-      //// Использование индексатора эквивалентно вызову Add 
-      //emailLookup["sbishopecontoso.com"] = "Bishop, Scott";
-
-      //Console.WriteLine(emailLookup["sbishopecontoso.com"]);
 
       //#2
+      //BitArray bits = new BitArray(3);
+      //bits[0] = true;
+      //bits[1] = true;
+      //bits[2] = true;
 
-      Hashtable emailLookup = new Hashtable();
+      //BitArray moreBits = new BitArray(3);
+      //moreBits[0] = true;
+      //moreBits[1] = true;
+      //moreBits[2] = false;
 
-      emailLookup["sbishop@contoso.com"] = "Bishop, Scott";
-      emailLookup["chess@contoso.com"] = "Hess, Christian";
-      emailLookup["djump@contoso.com"] = "Jump, Dan";
-      //foreach (object name in emailLookup)
+      //BitArray xorBits = bits.Xor(moreBits);
+      //foreach (bool bit in xorBits)
       //{
-      //    Console.WriteLine(name);
+      //    Console.WriteLine(bit);
       //}
-      ////#3
-      //foreach (DictionaryEntry entry in emailLookup)
-      //{
-      //    Console.WriteLine("value {0}, Key {1}", entry.Value,entry.Key);
 
-      //}
-      ////#4
-      //foreach (object name in emailLookup.Keys)
-      //{
-      //    Console.WriteLine(name);
-      //}
-      //#5
+      // #3
+      //BitVector32 vector = new BitVector32(0);
 
-      Hashtable duplicates = new Hashtable();
+      //int firstBit = BitVector32.CreateMask();
+      //int secondBit = BitVector32.CreateMask(firstBit);
+      //int thirdBit = BitVector32.CreateMask(secondBit);
+      ////
+      //vector[firstBit] = true;
+      //vector[thirdBit] = true;
 
-      //duplicates["First"] = "1st";
-      //duplicates["First"] = "the first";
+      //Console.WriteLine("{0} should be 3", vector.Data);
+      //Console.WriteLine(vector);  // BitVector32{00000000000000000000000000000011}
 
-      //Console.WriteLine(duplicates.Count); // 1
+      ////# 4
+      BitVector32 newVector = new BitVector32(191);
+      //Console.WriteLine(newVector);
 
-      //#6
+      //bool bit1 = newVector[firstBit];
+      //bool bit2 = newVector[secondBit];
+      //bool bit3 = newVector[0x40];
 
-      //Hashtable duplicates = new Hashtable();
+      // bit1 = false, bit2 = false, bit3 = true
 
-      Fish key1 = new Fish("Herring");
-      Fish key2 = new Fish("Herring");
-      duplicates[key1] = "Hello";
-      duplicates[key2] = "Hello";
+      // #4
+      BitVector32.Section firstSection = BitVector32.CreateSection(10);
+      BitVector32.Section secondSection = BitVector32.CreateSection(50, firstSection);
+      BitVector32.Section thirdSection = BitVector32.CreateSection(500, secondSection);
 
-      Console.WriteLine(duplicates.Count); // 2
+      BitVector32 packedBits = new BitVector32(0);
 
+      packedBits[firstSection] = 10;
+      packedBits[secondSection] = 1;
+      packedBits[thirdSection] = 192;
+
+      Console.WriteLine(packedBits[firstSection]);
+      Console.WriteLine(packedBits[secondSection]);
+      Console.WriteLine(packedBits[thirdSection]);
+
+
+      Console.WriteLine(packedBits.Data); // 98314
+
+      Console.WriteLine(packedBits); // BitVector32{00000000000000011000000000001010}
 
 
 
     }
   }
-  public class Fish
-  {
-    string name;
-    public Fish(string theName)
-    {
-      name = theName;
-    }
-    //#7
-    public override int GetHashCode()
-    {
-      return name.GetHashCode();
-    }
-    //#8
-    public override bool Equals(object obj)
-    {
-      Fish otherFish = obj as Fish;
-      if (otherFish == null) return false;
-      return otherFish.name == name;
-    }
-
-  }
-
-
-
 }
